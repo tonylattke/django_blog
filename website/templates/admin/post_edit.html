@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title_web %} : {{post.name}} {% endblock title_web %}
+
+<!-- ########################## principal_content ######################### -->
+{% block principal_content %}
+
+<div class="well">
+    <form method="post" id="form_modify_post" action="/post/modify/{{post.id}}">    
+        {% csrf_token %}
+        <h4>Name:</h4>
+        <div class="form-group">
+            <textarea name="name" id="post_name" class="form-control" rows="1">{{post.name}}</textarea>
+        </div>
+        <h4>Text:</h4>
+        <div class="form-group">
+            <textarea name="text" id="post_text" class="form-control">{{post.text}}</textarea>
+        </div>
+        <div id="modify_post" class="btn btn-primary">Update</div>
+    </form>
+    
+</div>
+
+<hr>
+
+{% endblock principal_content %}
+
+<!-- ########################## javascript_content ######################## -->
+{% block javascript_content %}
+<script src="{{ STATIC_URL }}js/post_edit.js"></script>
+{% endblock javascript_content %}

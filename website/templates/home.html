@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+<!-- ########################## principal_content ######################### -->
+{% block principal_content %}
+{% if posts %}
+
+    {% for post in posts %}
+        {% if user.is_authenticated %}
+            <form method="post" id="form_delete_post" action="post/delete/{{post.id}}">
+            {% csrf_token %}
+            </form>
+        {% endif %}
+        <h1 id="{{post.id}}">
+            <a href="/post/{{post.id}}">{{post.name}}</a>
+            
+            {% if user.is_authenticated %}
+                <a class="btn" href="/post/edit/{{post.id}}">Edit</a>
+                <a class="btn btn-primary pull-right delete_post">X</a>
+            {% endif %}
+        </h1>
+        <p>
+            <span class="glyphicon glyphicon-time"></span> Posted on {{post.date}}
+        </p>
+        {{post.text|truncatewords_html:50}}
+        </br>
+        </br>
+        <a class="btn btn-primary" href="/post/{{post.id}}">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
+
+        <hr>
+    {% endfor %}
+{% else %}
+    <p>No posts</p>
+{% endif %}
+<!-- pager -->
+<ul class="pager">
+    {% if older.status %}
+    <li class="previous">
+        <a href="/page={{older.number}}">&larr; Older</a>
+    </li>
+    {% endif %}
+
+    {% if newer.status %}
+    <li class="next">
+        <a href="/page={{newer.number}}">Newer &rarr;</a>
+    </li>
+    {% endif %}
+</ul>
+{% endblock principal_content %}
+
+<!-- ########################## javascript_content ######################## -->
+{% block javascript_content %}
+<script src="{{ STATIC_URL }}js/home.js"></script>
+{% endblock javascript_content %}
