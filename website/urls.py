@@ -23,6 +23,9 @@ urlpatterns = patterns('',
 	url(r'^do_login$'										, views.login_usr_do),	#Login do
 	url(r'^logout$'											, views.logout_usr),	#Logout
 
+	#Json
+	url(r'^posts.json$'										, views.allPostJson),	#Json Export
+
 	#Admin
 	url(r'^post/new$' 										, views.post_new),		#Post New
 	url(r'^post/new_do$' 									, views.post_new_do),	#Post New do

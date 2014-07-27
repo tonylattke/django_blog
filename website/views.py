@@ -9,6 +9,7 @@ from django.core.urlresolvers       import reverse
 
 #Imports from Python
 from datetime		import datetime
+import json
 
 #Imports from User
 from website.models	import *
@@ -310,6 +311,19 @@ def make_comment(request,post_id):
 		return redirect('/post/' + str(post_backup.id))
 	#Error
 	return error_page('Invalid action')
+
+###############################################################################
+############################### Export to Json ################################
+def allPostJson(request):
+	data_exit = []
+	for aux in Post.objects.all():
+		post = {
+			'name' 	: aux.name,
+			'text'	: aux.text,
+			'date'	: aux.date.isoformat()
+		}
+		data_exit.append(post)
+	return HttpResponse(json.dumps(data_exit), content_type="application/json")
 
 ###############################################################################
 ################################## Testing ####################################
